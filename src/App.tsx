@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import parse from "html-react-parser";
+import { SHAPES } from "./shapes";
 
 const parseCssStyles = (
   cssText: string
@@ -218,18 +219,11 @@ const MultipleSvgsExample: React.FC = () => {
         padding: "20px",
       }}
     >
-      <div style={{ width: "300px" }}>
-        <ColorableSvg
-          url="https://ik.imagekit.io/tachi/Layeredmandala-9.svg?updatedAt=1713233143073"
-          prefix="svg1"
-        />
-      </div>
-      <div style={{ width: "300px" }}>
-        <ColorableSvg
-          url="https://ik.imagekit.io/tachi/MOM-12.svg?updatedAt=1713233143450"
-          prefix="svg2"
-        />
-      </div>
+      {SHAPES.map((shape) => (
+        <div style={{ width: "300px" }}>
+          <ColorableSvg url={shape.preview} prefix={shape.id} />
+        </div>
+      ))}
     </div>
   );
 };
