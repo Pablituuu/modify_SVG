@@ -152,4 +152,38 @@ export const SHAPES = [
         },
         preview: "https://ik.imagekit.io/tachi/18-01.svg?updatedAt=1713233140260",
     },
+    {
+        id: "vector20",
+        type: "vector",
+        details: {
+            src: "https://ik.imagekit.io/pablituuu/rgba.svg?updatedAt=1743006058276",
+        },
+        preview: "https://ik.imagekit.io/pablituuu/rgba.svg?updatedAt=1743006058276",
+    },
+    {
+        id: "vector21",
+        type: "vector",
+        details: {
+            src: "https://ik.imagekit.io/pablituuu/hexadecimal.svg?updatedAt=1743006058372",
+        },
+        preview:
+            "https://ik.imagekit.io/pablituuu/hexadecimal.svg?updatedAt=1743006058372",
+    },
+    {
+        id: "vector22",
+        type: "vector",
+        details: {
+            src: "https://ik.imagekit.io/pablituuu/hsv.svg?updatedAt=1743006058994",
+        },
+        preview: "https://ik.imagekit.io/pablituuu/hsv.svg?updatedAt=1743006058994",
+    },
+    {
+        id: "vector23",
+        type: "vector",
+        details: {
+            src: "https://ik.imagekit.io/pablituuu/lista-de-verificacion%20p.svg?updatedAt=1743002024564",
+        },
+        preview:
+            "https://ik.imagekit.io/pablituuu/lista-de-verificacion%20p.svg?updatedAt=1743002024564",
+    },
 ];
