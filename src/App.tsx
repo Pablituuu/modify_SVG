@@ -285,7 +285,6 @@ interface ColorableSvgProps {
 const ColorableSvg: React.FC<ColorableSvgProps> = ({ url, prefix, name }) => {
   const [svgContent, setSvgContent] = useState<string>("");
   const [defaultSvgContent, setDefaultSvgContent] = useState<string>("");
-  const [colors, setColors] = useState<string[]>([]);
   const [colorMapping, setColorMapping] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -301,7 +300,6 @@ const ColorableSvg: React.FC<ColorableSvgProps> = ({ url, prefix, name }) => {
         setColorMapping(mapping);
         setSvgContent(serializer);
         setDefaultSvgContent(serializer);
-        setColors(colors);
       } catch (error) {
         console.error("Error al cargar el SVG:", error);
       }
