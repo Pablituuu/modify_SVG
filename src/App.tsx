@@ -44,6 +44,36 @@ function getEffectiveFill(el: Element): string | null {
   return null;
 }
 
+function convertSvgColorsToHex(svgString: string): string {
+  const hexColorRegex = /#([0-9a-fA-F]{3,6})\b/g;
+  const rgbColorRegex = /rgb\(\s*(\d+),\s*(\d+),\s*(\d+)\s*\)/g;
+  const rgbaColorRegex = /rgba\(\s*(\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\s*\)/g;
+
+  function expandShortHex(hex: string): string {
+    if (hex.length === 3) {
+      return `#${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`.toUpperCase();
+    }
+    return `#${hex.toUpperCase()}`;
+  }
+
+  function rgbToHex(r: number, g: number, b: number): string {
+    return `#${((1 << 24) | (r << 16) | (g << 8) | b)
+      .toString(16)
+      .slice(1)
+      .toUpperCase()}`;
+  }
+
+  svgString = svgString.replace(hexColorRegex, (_, hex) => expandShortHex(hex));
+  svgString = svgString.replace(rgbColorRegex, (_, r, g, b) =>
+    rgbToHex(+r, +g, +b)
+  );
+  svgString = svgString.replace(rgbaColorRegex, (_, r, g, b) =>
+    rgbToHex(+r, +g, +b)
+  );
+
+  return svgString;
+}
+
 const parseCssStyles = (
   cssText: string
 ): Record<string, { fill?: string; stroke?: string }> => {
@@ -187,6 +217,7 @@ function prefixSvgClasses(svgCode: string, prefix: string) {
         colorSet.add(expandHexColor(color));
       }
     });
+
     const inlineStyle = el.getAttribute("style");
     if (inlineStyle) {
       const fillMatch = /fill\s*:\s*([^;]+);?/.exec(inlineStyle);
@@ -212,6 +243,7 @@ function prefixSvgClasses(svgCode: string, prefix: string) {
       }
     }
   });
+
   colorSet.forEach(
     (c) => !colors.includes(c) && isValidHexColor(c) && colors.push(c)
   );
@@ -292,7 +324,10 @@ const ColorableSvg: React.FC<ColorableSvgProps> = ({ url, prefix, name }) => {
       try {
         const response = await fetch(url);
         const text = await response.text();
-        const { serializer, colors } = prefixSvgClasses(text, prefix);
+        const { serializer, colors } = prefixSvgClasses(
+          convertSvgColorsToHex(text),
+          prefix
+        );
         const mapping: Record<string, string> = {};
         colors.forEach((color) => {
           mapping[color] = color;
